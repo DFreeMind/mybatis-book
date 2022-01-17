@@ -200,19 +200,24 @@ public class ScriptRunner {
 
   private void handleLine(StringBuilder command, String line) throws SQLException {
     String trimmedLine = line.trim();
+    // 判断本行内容是否为注释，如果为注释内容，则打印注释内容。
     if (lineIsComment(trimmedLine)) {
       Matcher matcher = DELIMITER_PATTERN.matcher(trimmedLine);
       if (matcher.find()) {
         delimiter = matcher.group(5);
       }
       println(trimmedLine);
+      // 判断改行是否包含分号
     } else if (commandReadyToExecute(trimmedLine)) {
+      // 获取改行分号之前的内容
       command.append(line.substring(0, line.lastIndexOf(delimiter)));
       command.append(LINE_SEPARATOR);
       println(command);
+      // 执行该条完整的SQL语句
       executeStatement(command.toString());
       command.setLength(0);
     } else if (trimmedLine.length() > 0) {
+      // 改行中不包含分号,说明这条SQL语句未结束,最佳本行内容到之前读取的内容之中
       command.append(line);
       command.append(LINE_SEPARATOR);
     }

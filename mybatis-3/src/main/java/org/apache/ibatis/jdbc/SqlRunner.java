@@ -79,8 +79,11 @@ public class SqlRunner {
   public List<Map<String, Object>> selectAll(String sql, Object... args) throws SQLException {
     PreparedStatement ps = connection.prepareStatement(sql);
     try {
+      // 为 SQL 中的占位符赋值
       setParameters(ps, args);
+      // 执行查询
       ResultSet rs = ps.executeQuery();
+      // 将结果转为 List
       return getResults(rs);
     } finally {
       try {
@@ -206,10 +209,12 @@ public class SqlRunner {
       } else if (args[i] instanceof Null) {
         ((Null) args[i]).getTypeHandler().setParameter(ps, i + 1, null, ((Null) args[i]).getJdbcType());
       } else {
+        // 根据参数类型获取对应的 TypeHandler
         TypeHandler typeHandler = typeHandlerRegistry.getTypeHandler(args[i].getClass());
         if (typeHandler == null) {
           throw new SQLException("SqlRunner could not find a TypeHandler instance for " + args[i].getClass());
         } else {
+          // 调用 TypeHandler 的 setParameter 方法为参数占位符复制
           typeHandler.setParameter(ps, i + 1, args[i], null);
         }
       }
@@ -221,10 +226,12 @@ public class SqlRunner {
       List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
       List<String> columns = new ArrayList<String>();
       List<TypeHandler<?>> typeHandlers = new ArrayList<TypeHandler<?>>();
+      // 1.获取 ResultSetMetaData 对象,通过 ResultSetMetaData 获取列名
       ResultSetMetaData rsmd = rs.getMetaData();
       for (int i = 0, n = rsmd.getColumnCount(); i < n; i++) {
         columns.add(rsmd.getColumnLabel(i + 1));
         try {
+          // 2.获取列的 JDBC 类型, 根据类型后期 TypeHandler 对象
           Class<?> type = Resources.classForName(rsmd.getColumnClassName(i + 1));
           TypeHandler<?> typeHandler = typeHandlerRegistry.getTypeHandler(type);
           if (typeHandler == null) {
@@ -235,11 +242,13 @@ public class SqlRunner {
           typeHandlers.add(typeHandlerRegistry.getTypeHandler(Object.class));
         }
       }
+      // 3. 遍历 ResultSet 对象, 将 ResultSet 对象中记录行转换为 Map 对象
       while (rs.next()) {
         Map<String, Object> row = new HashMap<String, Object>();
         for (int i = 0, n = columns.size(); i < n; i++) {
           String name = columns.get(i);
           TypeHandler<?> handler = typeHandlers.get(i);
+          // 通过 TypeHandler 对象的 getResult 方法将 JDBC 类型转换为 Java 类型
           row.put(name.toUpperCase(Locale.ENGLISH), handler.getResult(rs, name));
         }
         list.add(row);

@@ -20,7 +20,12 @@ import java.util.Properties;
 
 /**
  * MyBatis uses an ObjectFactory to create all needed new Objects.
- * 
+ *
+ * ObjectFactory是MyBatis中的对象工厂，MyBatis每次创建Mapper映射结果对象的新实例时，
+ * 都会使用一个对象工厂（ObjectFactory）实例来完成。ObjectFactory接口只有一个默认的实现，
+ * 即DefaultObjectFactory，默认的对象工厂需要做的仅仅是实例化目标类，要么通过默认构造方法，
+ * 要么在参数映射存在的时候通过参数构造方法来实例化。
+ *
  * @author Clinton Begin
  */
 public interface ObjectFactory {

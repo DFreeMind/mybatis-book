@@ -28,6 +28,7 @@ import org.apache.ibatis.reflection.wrapper.ObjectWrapper;
 import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
 
 /**
+ * 反射工具类,  用于获取和设置对象属性
  * @author Clinton Begin
  */
 public class MetaObject {

@@ -27,6 +27,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 
 /**
+ * 反射工具类, 用于获取类的相关信息
  * @author Clinton Begin
  */
 public class MetaClass {
