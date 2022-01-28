@@ -35,6 +35,7 @@ import java.util.List;
 public class CachingExecutor implements Executor {
 
   private final Executor delegate;
+  // 用于管理所有的二级缓存对象
   private final TransactionalCacheManager tcm = new TransactionalCacheManager();
 
   public CachingExecutor(Executor delegate) {
@@ -73,6 +74,7 @@ public class CachingExecutor implements Executor {
     return delegate.update(ms, parameterObject);
   }
 
+  // ☀️
   @Override
   public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
     BoundSql boundSql = ms.getBoundSql(parameterObject);

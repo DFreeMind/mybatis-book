@@ -51,15 +51,20 @@ public abstract class BaseExecutor implements Executor {
   protected Executor wrapper;
 
   protected ConcurrentLinkedQueue<DeferredLoad> deferredLoads;
-  // Mybatis一级缓存对象
+  // Mybatis一级缓存对象, 用于缓存Mybatis 查询结果
   protected PerpetualCache localCache;
-  // 存储过程输出参数缓存
+  // 存储过程输出参数缓存, 存储过程调用结果
   protected PerpetualCache localOutputParameterCache;
   protected Configuration configuration;
 
   protected int queryStack;
   private boolean closed;
 
+  /**
+   * 初始化 localCache 和 localOutputParameterCache
+   * @param configuration
+   * @param transaction
+   */
   protected BaseExecutor(Configuration configuration, Transaction transaction) {
     this.transaction = transaction;
     this.deferredLoads = new ConcurrentLinkedQueue<DeferredLoad>();
@@ -196,6 +201,14 @@ public abstract class BaseExecutor implements Executor {
     }
   }
 
+  /**
+   * 创建缓存的 key
+   * @param ms
+   * @param parameterObject
+   * @param rowBounds
+   * @param boundSql
+   * @return
+   */
   @Override
   public CacheKey createCacheKey(MappedStatement ms, Object parameterObject, RowBounds rowBounds, BoundSql boundSql) {
     if (closed) {
