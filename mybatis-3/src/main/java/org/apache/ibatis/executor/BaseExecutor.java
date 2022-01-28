@@ -133,6 +133,7 @@ public abstract class BaseExecutor implements Executor {
     BoundSql boundSql = ms.getBoundSql(parameter);
     // 创建CacheKey，用于缓存Key
     CacheKey key = createCacheKey(ms, parameter, rowBounds, boundSql);
+    // ☀️
     // 调用重载的query（）方法
     return query(ms, parameter, rowBounds, resultHandler, key, boundSql);
  }
@@ -150,11 +151,12 @@ public abstract class BaseExecutor implements Executor {
     List<E> list;
     try {
       queryStack++;
-      // 从缓存中获取结果
+      // 从缓存中获取结果( 一级缓存)
       list = resultHandler == null ? (List<E>) localCache.getObject(key) : null;
       if (list != null) {
         handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);
       } else {
+        // ☀️
         // 缓存中获取不到，则调用queryFromDatabase（）方法从数据库中查询
         list = queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql);
       }

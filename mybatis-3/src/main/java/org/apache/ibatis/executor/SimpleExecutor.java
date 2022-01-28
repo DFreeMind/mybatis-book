@@ -53,6 +53,7 @@ public class SimpleExecutor extends BaseExecutor {
     }
   }
 
+  // ☀️
   @Override
   public <E> List<E> doQuery(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
     Statement stmt = null;
@@ -60,6 +61,7 @@ public class SimpleExecutor extends BaseExecutor {
       Configuration configuration = ms.getConfiguration();
       // 获取StatementHandler对象
       StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler, boundSql);
+      // ☀️
       // 调用prepareStatement（）方法,创建Statement对象，并进行设置参数等操作
       stmt = prepareStatement(handler, ms.getStatementLog());
       // 调用StatementHandler对象的query（）方法执行查询操作

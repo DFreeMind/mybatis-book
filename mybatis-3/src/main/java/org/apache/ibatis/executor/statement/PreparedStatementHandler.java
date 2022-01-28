@@ -28,6 +28,7 @@ import java.sql.*;
 import java.util.List;
 
 /**
+ * Mybatis 默认使用 PreparedStatementHandler 与数据库交互
  * @author Clinton Begin
  */
 public class PreparedStatementHandler extends BaseStatementHandler {

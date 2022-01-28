@@ -28,6 +28,9 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+/**
+ * ParamNameResolver对象用于解析Mapper方法中的参数名称及参数注解信息
+ */
 public class ParamNameResolver {
 
   private static final String GENERIC_NAME_PREFIX = "param";
@@ -49,6 +52,11 @@ public class ParamNameResolver {
 
   private boolean hasParamAnnotation;
 
+  /**
+   * ParamNameResolver构造方法中完成了Mapper方法参数的解析过程
+   * @param config
+   * @param method
+   */
   public ParamNameResolver(Configuration config, Method method) {
     // 获取所有参数类型
     final Class<?>[] paramTypes = method.getParameterTypes();

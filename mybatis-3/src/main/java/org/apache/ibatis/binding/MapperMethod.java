@@ -53,6 +53,12 @@ public class MapperMethod {
         this.method = new MethodSignature(config, mapperInterface, method);
     }
 
+    /**
+     * 执行 SQL 的关键方法
+     * @param sqlSession
+     * @param args
+     * @return
+     */
     public Object execute(SqlSession sqlSession, Object[] args) {
         Object result;
         // 其中command为MapperMethod构造是创建的SqlCommand对象
@@ -271,6 +277,7 @@ public class MapperMethod {
             // 如果方法是在Mapper父接口中定义，则根据父接口获取对应的MappedStatement对象
             for (Class<?> superInterface : mapperInterface.getInterfaces()) {
                 if (declaringClass.isAssignableFrom(superInterface)) {
+                    // 递归调用
                     MappedStatement ms = resolveMappedStatement(superInterface, methodName,
                             declaringClass, configuration);
                     if (ms != null) {

@@ -72,6 +72,7 @@ import java.util.*;
 
   public void parse() {
     if (!configuration.isResourceLoaded(resource)) {
+      // ☀️
       // 调用XPathParser的evalNode（）方法获取根节点对应的XNode对象
       configurationElement(parser.evalNode("/mapper"));
       // 將资源路径添加到Configuration对象中
@@ -109,6 +110,7 @@ import java.util.*;
       resultMapElements(context.evalNodes("/mapper/resultMap"));
       // 解析所有的<sql>标签
       sqlElement(context.evalNodes("/mapper/sql"));
+      // ☀️
       // 解析所有的<select|insert|update|delete>标签
       buildStatementFromContext(context.evalNodes("select|insert|update|delete"));
     } catch (Exception e) {
@@ -123,11 +125,13 @@ import java.util.*;
     buildStatementFromContext(list, null);
   }
 
+  // ☀️
   private void buildStatementFromContext(List<XNode> list, String requiredDatabaseId) {
     for (XNode context : list) {
       // 通过XMLStatementBuilder对象，对<select|update|insert|delete>标签进行解析
       final XMLStatementBuilder statementParser = new XMLStatementBuilder(configuration, builderAssistant, context, requiredDatabaseId);
       try {
+        // ☀️
         // 调用parseStatementNode（）方法解析
         statementParser.parseStatementNode();
       } catch (IncompleteElementException e) {

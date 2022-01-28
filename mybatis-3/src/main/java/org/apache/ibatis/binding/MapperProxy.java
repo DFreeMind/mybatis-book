@@ -28,6 +28,8 @@ import java.lang.reflect.Modifier;
 import java.util.Map;
 
 /**
+ * Mapper 动态代理生成类
+ * MapperProxy使用的是JDK内置的动态代理，实现了InvocationHandler接口
  * @author Clinton Begin
  * @author Eduardo Macarron
  */
