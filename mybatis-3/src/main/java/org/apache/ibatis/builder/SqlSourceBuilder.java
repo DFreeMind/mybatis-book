@@ -63,8 +63,11 @@ public class SqlSourceBuilder extends BaseBuilder {
       return parameterMappings;
     }
 
+    // 对参数占位符进行替换
     @Override
     public String handleToken(String content) {
+      // 对占位符内容进行解析, 将占位符信息替换为 ParamemterMapping 对象
+      // STEPINTO 🍉
       parameterMappings.add(buildParameterMapping(content));
       return "?";
     }

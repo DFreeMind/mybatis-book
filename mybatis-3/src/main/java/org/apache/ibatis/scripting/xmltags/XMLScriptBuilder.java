@@ -63,6 +63,14 @@ public class XMLScriptBuilder extends BaseBuilder {
     nodeHandlerMap.put("bind", new BindHandler());
   }
 
+  /**
+   * 完成 SQL 的解析
+   *
+   * MyBatis中判断SQL配置是否属于动态SQL的标准
+   * 是SQL配置是否包含<if>、<where>、<trim>
+   * 等元素或者${}参数占位符。
+   * @return
+   */
   public SqlSource parseScriptNode() {
     // 调用parseDynamicTags（）方法將SQL配置转换为SqlNode对象
     MixedSqlNode rootSqlNode = parseDynamicTags(context);

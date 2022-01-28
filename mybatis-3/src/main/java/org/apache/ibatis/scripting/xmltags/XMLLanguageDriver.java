@@ -37,15 +37,31 @@ public class XMLLanguageDriver implements LanguageDriver {
   public ParameterHandler createParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
     return new DefaultParameterHandler(mappedStatement, parameterObject, boundSql);
   }
+
+  /**
+   * 处理 XML 中的配置
+   * @param configuration The MyBatis configuration
+   * @param script XNode parsed from a XML file
+   * @param parameterType input parameter type got from a mapper method or specified in the parameterType xml attribute. Can be null.
+   * @return
+   */
   @Override
   public SqlSource createSqlSource(Configuration configuration, XNode script, Class<?> parameterType) {
     // 该方法用于解析XML文件中配置的SQL信息
     // 创建XMLScriptBuilder对象
     XMLScriptBuilder builder = new XMLScriptBuilder(configuration, script, parameterType);
+    // ☀️
     // 调用 XMLScriptBuilder对象parseScriptNode（）方法解析SQL资源
     return builder.parseScriptNode();
   }
 
+  /**
+   * 解析注解中的SQL配置信息
+   * @param configuration The MyBatis configuration
+   * @param script The content of the annotation
+   * @param parameterType input parameter type got from a mapper method or specified in the parameterType xml attribute. Can be null.
+   * @return
+   */
   @Override
   public SqlSource createSqlSource(Configuration configuration, String script, Class<?> parameterType) {
     // 该方法用于解析Java注解中配置的SQL信息
