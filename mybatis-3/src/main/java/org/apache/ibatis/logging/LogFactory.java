@@ -85,10 +85,12 @@ public final class LogFactory {
     }
   }
 
+  // 自定义日志实现
   public static synchronized void useCustomLogging(Class<? extends Log> clazz) {
     setImplementation(clazz);
   }
 
+  // 使用 SL4J 框架
   public static synchronized void useSlf4jLogging() {
     setImplementation(org.apache.ibatis.logging.slf4j.Slf4jImpl.class);
   }

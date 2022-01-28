@@ -16,6 +16,7 @@
 package org.apache.ibatis.logging;
 
 /**
+ * 日志操作规范
  * @author Clinton Begin
  */
 public interface Log {
