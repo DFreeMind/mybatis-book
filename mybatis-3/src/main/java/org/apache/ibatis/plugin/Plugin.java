@@ -45,6 +45,7 @@ public class Plugin implements InvocationHandler {
 
   /**
    * 该方法用于创建Executor、ParameterHandler、ResultSetHandler、StatementHandler的代理对象
+   * 简化动态代理对象的创建
    * @param target
    * @param interceptor
    * @return

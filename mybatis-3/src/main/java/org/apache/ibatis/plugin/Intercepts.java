@@ -22,6 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 用于修饰拦截器类, 告诉拦截器要对哪些组件进行拦截
  * @author Clinton Begin
  */
 @Documented

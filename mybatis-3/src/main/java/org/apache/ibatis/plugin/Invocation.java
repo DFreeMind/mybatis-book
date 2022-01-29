@@ -19,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
+ * 封装目标对象的方法及参数信息
  * @author Clinton Begin
  */
 public class Invocation {
