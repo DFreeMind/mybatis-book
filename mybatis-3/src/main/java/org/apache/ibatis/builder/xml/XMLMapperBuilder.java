@@ -31,6 +31,8 @@ import java.io.Reader;
 import java.util.*;
 
 /**
+ * 🍇
+ * 常用 Builder
  * @author Clinton Begin
  */
   public class XMLMapperBuilder extends BaseBuilder {
@@ -106,6 +108,7 @@ import java.util.*;
       cacheElement(context.evalNode("cache"));
       // 解析所有的<parameterMap>标签
       parameterMapElement(context.evalNodes("/mapper/parameterMap"));
+      // ☀️
       // 解析所有的<resultMap>标签
       resultMapElements(context.evalNodes("/mapper/resultMap"));
       // 解析所有的<sql>标签

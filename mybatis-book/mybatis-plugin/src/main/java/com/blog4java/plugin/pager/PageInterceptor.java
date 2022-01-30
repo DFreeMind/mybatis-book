@@ -25,6 +25,7 @@ public class PageInterceptor implements Interceptor {
 
     private String databaseType;
 
+    // 方法实现
     public Object intercept(Invocation invocation) throws Throwable {
         // 获取拦截的目标对象
         RoutingStatementHandler handler = (RoutingStatementHandler) invocation.getTarget();
@@ -137,7 +138,7 @@ public class PageInterceptor implements Interceptor {
     private void setTotalCount(Page<?> page, MappedStatement mappedStatement, Connection connection) {
         BoundSql boundSql = mappedStatement.getBoundSql(page);
         String sql = boundSql.getSql();
-        // 获取总记录数
+        // 根据原 SQL 语句获取对应的查询总记录数的 SQL 语句
         String countSql = this.getCountSql(sql);
         List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
         BoundSql countBoundSql = new BoundSql(mappedStatement.getConfiguration(), countSql, parameterMappings, page);
@@ -147,8 +148,10 @@ public class PageInterceptor implements Interceptor {
         try {
             pstmt = connection.prepareStatement(countSql);
             parameterHandler.setParameters(pstmt);
+            // 执行获取总记录数的 SQL 语句
             rs = pstmt.executeQuery();
             if (rs.next()) {
+                // 设置总记录数
                 int totalCount = rs.getInt(1);
                 page.setTotalCount(totalCount);
             }

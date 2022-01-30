@@ -175,7 +175,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     }
   }
 
-  //
+  // ☀️
   // 处理结果集
   //
   @Override
@@ -193,6 +193,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     // 如果指定了多个ResultMap，则对每个ResultMap进行处理
     while (rsw != null && resultMapCount > resultSetCount) {
       ResultMap resultMap = resultMaps.get(resultSetCount);
+      // 🍇
       // 3、调用handleResultSet方法处理结果集
       handleResultSet(rsw, resultMap, multipleResults, null);
       // 获取下一个结果集对象，需要JDBC驱动支持多结果集
@@ -333,9 +334,11 @@ public class DefaultResultSetHandler implements ResultSetHandler {
       ensureNoRowBounds();
       // 校验ResultHandler，可以设置safeResultHandlerEnabled=false参数绕过校验
       checkResultHandler();
+      // 🍇
       // 如果有嵌套的ResultMap，调用handleRowValuesForNestedResultMap处理嵌套ResultMap
       handleRowValuesForNestedResultMap(rsw, resultMap, resultHandler, rowBounds, parentMapping);
     } else {
+      // 🍇
       // 如果无嵌套的ResultMap，调用handleRowValuesForSimpleResultMap处理简单非嵌套ResultMap
       handleRowValuesForSimpleResultMap(rsw, resultMap, resultHandler, rowBounds, parentMapping);
     }
@@ -359,11 +362,13 @@ public class DefaultResultSetHandler implements ResultSetHandler {
   private void handleRowValuesForSimpleResultMap(ResultSetWrapper rsw, ResultMap resultMap, ResultHandler<?> resultHandler, RowBounds rowBounds, ResultMapping parentMapping)
       throws SQLException {
     DefaultResultContext<Object> resultContext = new DefaultResultContext<Object>();
+    // 跳过指定偏移行
     skipRows(rsw.getResultSet(), rowBounds);
     // 遍历处理每一行记录
     while (shouldProcessMoreRows(resultContext, rowBounds) && rsw.getResultSet().next()) {
       // 对<discriminator>标签配置的鉴别器进行处理，获取实际映射的ResultMap对象
       ResultMap discriminatedResultMap = resolveDiscriminatedResultMap(rsw.getResultSet(), resultMap, null);
+      // ☀️
       // 调用getRowValue（）把一行数据转换为Java实体对象
       Object rowValue = getRowValue(rsw, discriminatedResultMap);
       storeObject(resultHandler, resultContext, rowValue, parentMapping, rsw.getResultSet());
@@ -400,6 +405,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     }
   }
 
+  // ☀️
   // 处理非嵌套ResultMap
   private Object getRowValue(ResultSetWrapper rsw, ResultMap resultMap) throws SQLException {
     // 创建ResultLoaderMap对象，用于存放懒加载属性信息
@@ -601,6 +607,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     return cacheKey;
   }
 
+  // ☀️
   // 初始化返回的实体对象，并处理构造方法映射
   private Object createResultObject(ResultSetWrapper rsw, ResultMap resultMap, ResultLoaderMap lazyLoader, String columnPrefix) throws SQLException {
     this.useConstructorMappings = false; // reset previous mapping result
@@ -886,6 +893,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     Object rowValue = previousRowValue;
     // 遍历处理每一行记录
     while (shouldProcessMoreRows(resultContext, rowBounds) && rsw.getResultSet().next()) {
+      // 🍇
       // 处理<discriminator>标签配置的鉴别器
       final ResultMap discriminatedResultMap = resolveDiscriminatedResultMap(rsw.getResultSet(), resultMap, null);
       final CacheKey rowKey = createRowKey(discriminatedResultMap, rsw, null);
@@ -897,6 +905,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
           nestedResultObjects.clear();
           storeObject(resultHandler, resultContext, rowValue, parentMapping, rsw.getResultSet());
         }
+        // 🍇
         // 调用getRowValue
         rowValue = getRowValue(rsw, discriminatedResultMap, rowKey, null, partialObject);
       } else {
@@ -936,12 +945,15 @@ public class DefaultResultSetHandler implements ResultSetHandler {
         boolean foundValues = this.useConstructorMappings;
         // 是否指定了自动映射
         if (shouldApplyAutomaticMappings(resultMap, true)) {
+          // 🍇
           // 调用applyAutomaticMappings（）方法处理自动映射
           foundValues = applyAutomaticMappings(rsw, resultMap, metaObject, columnPrefix) || foundValues;
         }
+        // 🍇
         // 处理非<id>,<constructor>指定的映射
         foundValues = applyPropertyMappings(rsw, resultMap, metaObject, lazyLoader, columnPrefix) || foundValues;
         putAncestor(rowValue, resultMapId);
+        // 🍇
         // 处理嵌套的映射
         foundValues = applyNestedResultMappings(rsw, resultMap, metaObject, columnPrefix, combinedKey, true) || foundValues;
         ancestorObjects.remove(resultMapId);

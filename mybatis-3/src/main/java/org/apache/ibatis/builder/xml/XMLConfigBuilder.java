@@ -44,6 +44,8 @@ import java.io.Reader;
 import java.util.Properties;
 
 /**
+ * 🍇
+ * 常用 Builder
  * @author Clinton Begin
  * @author Kazuki Shimizu
  */
